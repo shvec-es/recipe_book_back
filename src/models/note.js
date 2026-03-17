@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
+import { TAGS } from '../constans/tags.js';
 
 // Створимо схему для документа нотатки
-
 const noteSchema = new Schema(
   {
     title: {
@@ -19,22 +19,24 @@ const noteSchema = new Schema(
       type: String,
       required: false,
       default: 'Todo',
-      enum: [
-        'Work',
-        'Personal',
-        'Meeting',
-        'Shopping',
-        'Ideas',
-        'Travel',
-        'Finance',
-        'Health',
-        'Important',
-        'Todo',
-      ],
+      enum: TAGS,
     },
   },
   {
     timestamps: true,
+    versionKey: false,
+  },
+);
+
+// Додаємо текстовий індекс: кажемо MongoDB,
+// що по полям title та content можна робити $text
+noteSchema.index(
+  { title: 'text', content: 'text' },
+  // не обовʼязково
+  {
+    name: 'NoteTextIndex',
+    weights: { title: 5, content: 5 },
+    default_language: 'english',
   },
 );
 

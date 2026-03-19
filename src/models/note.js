@@ -21,6 +21,11 @@ const noteSchema = new Schema(
       default: 'Todo',
       enum: TAGS,
     },
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: 'User', // встановлюємо зв’язок між колекціями: поле userId посилається на інший документ у колекції users
+      required: true,
+    },
   },
   {
     timestamps: true,

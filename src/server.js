@@ -2,11 +2,14 @@ import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
 import { errors } from 'celebrate';
-import { connectMongoDB } from './db/connectMongoDB.js';
+import cookieParser from 'cookie-parser';
 
+import { connectMongoDB } from './db/connectMongoDB.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
 import { logger } from './middleware/logger.js';
+
+import authRoutes from './routes/authRoutes.js';
 import notesRoutes from './routes/notesRoutes.js';
 
 const app = express();
@@ -19,7 +22,10 @@ app.use(logger);
 app.use(express.json());
 // Дозволяє запити з будь-яких джерел
 app.use(cors());
+app.use(cookieParser());
 
+// підключаємо маршрут реєстрації користувача
+app.use(authRoutes);
 // підключаємо групу маршрутів нотаток
 app.use(notesRoutes);
 

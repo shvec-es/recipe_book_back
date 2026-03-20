@@ -8,7 +8,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-export async function saveFileToCloudinary(buffer, userId) {
+export async function saveFileToCloudinary(buffer) {
   // функція обгорнута у проміс, щоб можна було зручно використовувати await. Якщо завантаження успішне — повертається результат з усією інформацією про файл (наприклад, secure_url), якщо помилка — вона передається у reject.
   return new Promise((resolve, reject) => {
     // створюється стрім для завантаження, куди можна передати вміст файлу.
@@ -16,9 +16,9 @@ export async function saveFileToCloudinary(buffer, userId) {
       {
         folder: 'notes-app/avatars', // така папка має бути створена у Cloudinary, в ній будуть завантажені картинки
         resource_type: 'image',
-        public_id: `avatar_${userId}`,
         overwrite: true,
         unique_filename: false,
+        use_filename: true,
       },
       (err, result) => (err ? reject(err) : resolve(result)),
     );

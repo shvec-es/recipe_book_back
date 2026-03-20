@@ -23,13 +23,17 @@ export const updateUserAvatar = async (req, res, next) => {
   // }
 
   // saveFileToCloudinary завантажує зображення у Cloudinary і повертає об’єкт із даними про файл.
-  const result = await saveFileToCloudinary(req.file.buffer, req.user._id);
+  const result = await saveFileToCloudinary(req.file.buffer);
 
   const updatedUser = await User.findOneAndUpdate(
     { _id: req.user._id },
     { avatar: result.secure_url }, // безпечне посилання на зображення, яке можна використовувати на фронтенді.
     { returnDocument: 'after' }, // гарантує, що у змінну user потрапить уже оновлений об’єкт користувача.
   );
+
+  if (!updatedUser) {
+    throw createHttpError(404, 'User not found');
+  }
 
   res.status(200).json({ url: updatedUser.avatar });
 };

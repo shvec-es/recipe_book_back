@@ -5,8 +5,7 @@ info:
   description: API для веб-додатку з рецептами. Дозволяє керувати профілем, рецептами та категоріями.
 
 servers:
-  - url: http://localhost:3000/api
-    description: Локальний сервер розробки
+  - url: https://recipe-book-back.onrender.com/api
 
 components:
   securitySchemes:

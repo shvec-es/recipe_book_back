@@ -2,7 +2,7 @@ import { model, Schema } from 'mongoose';
 
 const userSchema = new Schema(
   {
-    username: { type: String, trim: true },
+    username: { type: String, required: true, trim: true },
     email: { type: String, unique: true, required: true, trim: true },
     password: { type: String, required: true },
     avatar: {
@@ -13,13 +13,6 @@ const userSchema = new Schema(
   },
   { timestamps: true },
 );
-
-// username - необовʼязкове поле, якщо не передано - записуємо email. Потім можна буде замінити імʼя
-userSchema.pre('save', function () {
-  if (!this.username) {
-    this.username = this.email;
-  }
-});
 
 // видаляємо пароль з відповіді, щоб не повертати його клієнту, це небезпечно
 userSchema.methods.toJSON = function () {

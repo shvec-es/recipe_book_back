@@ -6,6 +6,8 @@ export const createSession = async (userId) => {
   const accessToken = crypto.randomBytes(30).toString('base64');
   const refreshToken = crypto.randomBytes(30).toString('base64');
 
+  await Session.deleteOne({ userId }); // Видалити попередню сесію
+
   return Session.create({
     userId,
     accessToken,

@@ -2,8 +2,13 @@ import { Joi, Segments } from 'celebrate';
 
 export const registerUserSchema = {
   [Segments.BODY]: Joi.object({
+    username: Joi.string().min(2).max(30).required().messages({
+      'any.required': 'Ім’я користувача є обов’язковим',
+    }),
     email: Joi.string().email().required(),
-    password: Joi.string().min(8).required(),
+    password: Joi.string().min(8).required().messages({
+      'string.min': 'Пароль має бути не менше 8 символів',
+    }),
   }),
 };
 

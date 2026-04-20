@@ -8,7 +8,10 @@ const sessionSchema = new Schema(
     accessTokenValidUntil: { type: Date, required: true },
     refreshTokenValidUntil: { type: Date, required: true },
   },
-  { timestamps: true },
+  { timestamps: true, versionKey: false },
 );
+
+// Автоматичне очищення застарілих сесій
+sessionSchema.index({ refreshTokenValidUntil: 1 }, { expireAfterSeconds: 0 });
 
 export const Session = model('Session', sessionSchema);

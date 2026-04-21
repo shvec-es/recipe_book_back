@@ -47,7 +47,9 @@ export const getRecipeById = async (req, res, next) => {
   try {
     const { recipeId } = req.params;
     console.log(recipeId);
-    const recipe = await Recipe.findById(recipeId);
+    const recipe = await Recipe.findById(recipeId)
+      .populate('category', 'type')
+      .populate('userId', 'username');
 
     if (!recipe) {
       throw createHttpError(404, 'Recipe not found');

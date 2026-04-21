@@ -162,6 +162,21 @@ paths:
         404:
           description: Рецепт не знайдено
 
+    delete:
+      summary: Видалення рецепту за ID
+      tags: [Recipes]
+      parameters:
+        - in: path
+          name: recipeId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Рецепт успішно видалено
+        404:
+          description: Рецепт не знайдено
+
   /categories:
     get:
       summary: Отримання списку всіх категорій

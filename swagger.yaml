@@ -9,10 +9,10 @@ servers:
 
 components:
   securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: accessToken
 
 paths:
   /auth/register:
@@ -92,11 +92,11 @@ paths:
       summary: Створення нового рецепту
       tags: [Recipes]
       security:
-        - bearerAuth: [] # Додаємо замочок
+        - cookieAuth: []
       requestBody:
         required: true
         content:
-          multipart/form-data: # ВАЖЛИВО: для завантаження файлів
+          multipart/form-data:
             schema:
               type: object
               properties:
@@ -106,6 +106,9 @@ paths:
                 category:
                   type: string
                   description: ID категорії
+                description:
+                  type: string
+                  example: 'Як приготувати блюдо'
                 ingredients:
                   type: string
                   description: JSON рядок або масив інгредієнтів
@@ -138,7 +141,7 @@ paths:
       summary: Оновлення рецепту
       tags: [Recipes]
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       parameters:
         - in: path
           name: recipeId
@@ -165,6 +168,8 @@ paths:
     delete:
       summary: Видалення рецепту за ID
       tags: [Recipes]
+      security:
+        - cookieAuth: []
       parameters:
         - in: path
           name: recipeId
@@ -190,7 +195,7 @@ paths:
       summary: Отримання даних поточного користувача
       tags: [Users]
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       responses:
         200:
           description: Дані профілю отримано
@@ -201,7 +206,7 @@ paths:
       summary: Оновлення профілю користувача (ім'я, аватар)
       tags: [Users]
       security:
-        - bearerAuth: []
+        - cookieAuth: []
       requestBody:
         content:
           multipart/form-data:

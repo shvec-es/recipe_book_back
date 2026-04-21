@@ -23,7 +23,7 @@ export const getAllRecipes = async (req, res, next) => {
       Recipe.countDocuments(filter),
       Recipe.find(filter)
         .populate('category', 'type')
-        .populate('userId', 'name')
+        .populate('userId', 'username')
         .skip(skip)
         .limit(perPage)
         .sort({ createdAt: -1 }),

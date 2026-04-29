@@ -64,6 +64,28 @@ paths:
         400:
           description: Помилка валідації
 
+  /auth/refresh:
+    post:
+      summary: Оновлення сесії користувача
+      tags: [Auth]
+      responses:
+        200:
+          description: Сесію успішно оновлено
+        401:
+          description: Сесія не знайдена або термін дії токена вийшов
+
+  /auth/logout:
+    post:
+      summary: Вихід із системи
+      tags: [Auth]
+      security:
+        - bearerAuth: []
+      responses:
+        204:
+          description: Успішний вихід, куки очищено
+        401:
+          description: Неавторизовано
+
   /recipes:
     get:
       summary: Отримання списку всіх рецептів
